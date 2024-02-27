@@ -6,7 +6,7 @@
   <p align="center">
     <a href="https://zhanxy.xyz/"><strong>Xiaoyu Zhan</strong></a>
     ·
-    <strong>Jianxin Yang</strong>
+    <a href="https://github.com/Jason-YangJX"><strong>Jianxin Yang</strong></a>
     ·
     <a href="http://www.njumeta.com/liyq/"><strong>Yuanqi Li</strong></a>
     ·
@@ -20,7 +20,10 @@
   <div align="center">
     <img src="./assets/teaser_v10.jpg" alt="Logo" width="100%">
   </div>
-  <p>This repository contains the official PyTorch implementation for SHERT (CVPR 2024).</p>
+  <a href='https://zhanxy.xyz/projects/shert'>
+      <img src='https://img.shields.io/badge/Project_page' alt='Project%20Page-FF7373'></a>
+  <br>
+  <p>This repository contains the official PyTorch implementation for Semantic Human Mesh Reconstruction with Textures.</p>
 </p>
 
   
@@ -32,7 +35,7 @@
 @inproceedings{zhan2024shert,
     title     = {Semantic Human Mesh Reconsturction with Textures},
     author    = {Xiaoyu Zhan, Jianxin Yang, Yuanqi Li, Jie Guo, Yanwen Guo, Wenping Wang},
-    booktitle = {Conference on Computer Vision and Pattern Recognition},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
     year      = {2024},
 }
 ```
