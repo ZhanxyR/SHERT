@@ -16,15 +16,15 @@
     ·
     <a href="https://www.cs.hku.hk/people/academic-staff/wenping" rel="external nofollow noopener" target="_blank"><strong>Wenping Wang*</strong></a>
   </p>
-  <h2 align="center">CVPR 2024</h2>
-  <div align="center">
-    <img src="./assets/teaser_v11.jpg" alt="teaser" width="100%">
-  </div>
   <p align="center">
     <br>
     <a href='https://zhanxy.xyz/projects/shert' rel="external nofollow noopener" target="_blank">
         <img src='https://img.shields.io/badge/Project%20Page-FF7373' alt='Project Page'></a>
   </p>
+  <h2 align="center">CVPR 2024</h2>
+  <div align="center">
+    <img src="./assets/teaser_v11.jpg" alt="teaser" width="100%">
+  </div>
   <br>
   <p>This repository contains the official PyTorch implementation for Semantic Human Mesh Reconstruction with Textures.</p>
 </p>
