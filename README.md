@@ -18,7 +18,7 @@
   </p>
   <h2 align="center">CVPR 2024</h2>
   <div align="center">
-    <img src="./assets/teaser_v10.jpg" alt="Logo" width="100%">
+    <img src="./assets/teaser_v11.jpg" alt="teaser" width="100%">
   </div>
   <p>This repository contains the official PyTorch implementation for SHERT (CVPR 2024).</p>
 </p>
