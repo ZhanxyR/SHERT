@@ -1,8 +1,3 @@
-# 
----
-
----
-
 <p align="center">
 
   <h1 align="center">Semantic Human Mesh Reconstruction with Textures</h1>
