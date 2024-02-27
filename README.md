@@ -21,7 +21,7 @@
     <img src="./assets/teaser_v10.jpg" alt="Logo" width="100%">
   </div>
   <a href='https://zhanxy.xyz/projects/shert'>
-      <img src='https://img.shields.io/badge/Project_page' alt='Project%20Page-FF7373'></a>
+      <img src='https://img.shields.io/badge/Project%20Page-FF7373' alt='Project Page'></a>
   <br>
   <p>This repository contains the official PyTorch implementation for Semantic Human Mesh Reconstruction with Textures.</p>
 </p>
