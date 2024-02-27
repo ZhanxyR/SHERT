@@ -26,7 +26,6 @@
         <img src='https://img.shields.io/badge/Project%20Page-FF7373' alt='Project Page'></a>
   </p>
   <br>
-  <br>
   <p>This repository contains the official PyTorch implementation for Semantic Human Mesh Reconstruction with Textures.</p>
 </p>
 
