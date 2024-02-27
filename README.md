@@ -17,7 +17,6 @@
     <a href="https://www.cs.hku.hk/people/academic-staff/wenping" rel="external nofollow noopener" target="_blank"><strong>Wenping Wang*</strong></a>
   </p>
   <p align="center">
-    <br>
     <a href='https://zhanxy.xyz/projects/shert' rel="external nofollow noopener" target="_blank">
         <img src='https://img.shields.io/badge/Project%20Page-FF7373' alt='Project Page'></a>
   </p>
