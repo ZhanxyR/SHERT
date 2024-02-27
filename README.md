@@ -1,3 +1,5 @@
+<!-- Template from https://github.com/YuliangXiu/ECON -->
+
 <p align="center">
 
   <h1 align="center">Semantic Human Mesh Reconstruction with Textures</h1>
@@ -22,3 +24,17 @@
 </p>
 
   
+
+
+## Citation
+
+```bibtex
+@inproceedings{zhan2024shert,
+    title     = {Semantic Human Mesh Reconsturction with Textures},
+    author    = {Xiaoyu Zhan, Jianxin Yang, Yuanqi Li, Jie Guo, Yanwen Guo, Wenping Wang},
+    booktitle = {Conference on Computer Vision and Pattern Recognition},
+    year      = {2024},
+}
+```
+
+<br/>
