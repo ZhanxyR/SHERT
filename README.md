@@ -6,7 +6,7 @@
   <p align="center">
     <a href="https://zhanxy.xyz/" rel="external nofollow noopener" target="_blank"><strong>Xiaoyu Zhan</strong></a>
     ·
-    <a href="https://github.com/Jason-YangJX" rel="external nofollow noopener" target="_blank"><strong>Jianxin Yang</strong></a>
+    <a href="https://jason-yangjx.github.io/" rel="external nofollow noopener" target="_blank"><strong>Jianxin Yang</strong></a>
     ·
     <a href="http://www.njumeta.com/liyq/" rel="external nofollow noopener" target="_blank"><strong>Yuanqi Li</strong></a>
     ·
