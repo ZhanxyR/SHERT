@@ -14,7 +14,7 @@
     ·
     <a href="https://cs.nju.edu.cn/ywguo/index.htm" rel="external nofollow noopener" target="_blank"><strong>Yanwen Guo*</strong></a>
     ·
-    <a href="https://www.cs.hku.hk/people/academic-staff/wenping" rel="external nofollow noopener" target="_blank"><strong>Wenping Wang*</strong></a>
+    <a href="https://www.cs.hku.hk/people/academic-staff/wenping" rel="external nofollow noopener" target="_blank"><strong>Wenping Wang</strong></a>
   </p>
   <p align="center">
     <a href='https://zhanxy.xyz/projects/shert' rel="external nofollow noopener" target="_blank">
