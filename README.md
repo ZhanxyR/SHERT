@@ -28,8 +28,20 @@
   <p>This repository contains the official PyTorch implementation for Semantic Human Mesh Reconstruction with Textures.</p>
 </p>
 
-  
+  ### Thank you for your interest in this repository. We are currently in the process of converting model formats and finalizing scripts. The code will be released at a later time.
 
+## Acknowledgments
+
+There are also many powerful resources that greatly benefit our work:
+
+- [ICON](https://github.com/YuliangXiu/ICON)
+- [ECON](https://github.com/YuliangXiu/ECON)
+- [SMPL-X](https://github.com/vchoutas/smplx)
+- [ControlNet](https://github.com/lllyasviel/ControlNet)
+- [Stable-Diffusion](https://github.com/Stability-AI/stablediffusion)
+- [EMOCA](https://github.com/radekd91/emoca)
+
+This work was supported by the National Natural Science Foundation of China under Grant numbers 62032011.
 
 ## Citation
 
