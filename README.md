@@ -18,19 +18,24 @@
   </p>
   <p align="center">
     <a href='https://zhanxy.xyz/projects/shert' rel="external nofollow noopener" target="_blank">
-        <img src='https://img.shields.io/badge/Project%20Page-FF7373' alt='Project Page'></a>
+        <img src='https://img.shields.io/badge/Project-Page-green' alt='Project Page'></a>
+    <a href="https://arxiv.org/abs/2403.02561v2" rel="external nofollow noopener" target='_blank'>
+        <img src="https://img.shields.io/badge/arXiv-2403.02561-B31B1B" alt='Arxiv Link'></a>
   </p>
-  <h2 align="center">CVPR 2024</h2>
+  <br>
+  <p>This repository contains the official <b>PyTorch</b> implementation for <b>Semantic Human Mesh Reconstruction with Textures</b>.</p>
   <div align="center">
     <img src="./assets/teaser_v11.jpg" alt="teaser" width="100%">
   </div>
-  <br>
-  <p>This repository contains the official PyTorch implementation for Semantic Human Mesh Reconstruction with Textures.</p>
+  
 </p>
 
+  ## (Preparing, coming soon)
   ### Thank you for your interest in this repository. We are currently in the process of converting model formats and finalizing scripts. The code will be released at a later time.
 
 ## Acknowledgments
+
+This work was supported by the National Natural Science Foundation of China (No. 62032011) and the Natural Science Foundation of Jiangsu Province (No. BK20211147).
 
 There are also many powerful resources that greatly benefit our work:
 
@@ -40,18 +45,24 @@ There are also many powerful resources that greatly benefit our work:
 - [ControlNet](https://github.com/lllyasviel/ControlNet)
 - [Stable-Diffusion](https://github.com/Stability-AI/stablediffusion)
 - [EMOCA](https://github.com/radekd91/emoca)
+- [THuman2.0](https://github.com/ytrock/THuman2.0-Dataset)
+- [PIFu](https://github.com/shunsukesaito/PIFu)
+- [PIFuHD](https://github.com/facebookresearch/pifuhd)
+- [Open-PIFuhd](https://github.com/lingtengqiu/Open-PIFuhd)
 
-This work was supported by the National Natural Science Foundation of China under Grant numbers 62032011.
+
 
 ## Citation
 
 ```bibtex
 @inproceedings{zhan2024shert,
     title     = {Semantic Human Mesh Reconsturction with Textures},
-    author    = {Xiaoyu Zhan, Jianxin Yang, Yuanqi Li, Jie Guo, Yanwen Guo, Wenping Wang},
+    author    = {Zhan, Xiaoyu and Yang, Jianxin and Li, Yuanqi and Guo, Jie and Guo, Yanwen and Wang, Wenping},
     booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
     year      = {2024},
 }
 ```
 
-<br/>
+
+## Contact
+Zhan, Xiaoyu (zhanxy@smail.nju.edu.cn) and Yang, Jianxin (jianxin-yang@smail.nju.edu.cn)
