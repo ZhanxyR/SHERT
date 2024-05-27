@@ -49,7 +49,8 @@ There are also many powerful resources that greatly benefit our work:
 - [PIFu](https://github.com/shunsukesaito/PIFu)
 - [PIFuHD](https://github.com/facebookresearch/pifuhd)
 - [Open-PIFuhd](https://github.com/lingtengqiu/Open-PIFuhd)
-
+- [DecoMR](https://github.com/zengwang430521/DecoMR)
+- [Densebody](https://github.com/Lotayou/densebody_pytorch)
 
 
 ## Citation

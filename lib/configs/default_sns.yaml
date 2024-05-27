@@ -1,0 +1,14 @@
+use_thuman_smplx_param: False 
+smplx_gender: 'neutral'
+t_max_sample_dis: 0.1
+t_angle: 2
+t_area: 3
+t_edge: 3
+t_s_angle: 2
+t_s_area: 3
+t_s_edge: 3
+t_s_connect: 500
+
+
+
+

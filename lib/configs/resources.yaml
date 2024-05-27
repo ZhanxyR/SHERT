@@ -1,0 +1,30 @@
+econ_calib: "./data/cameras/econ_calib.npy"
+
+masks:
+  face_uv_refine: "./data/masks/face_uv_refine.png"
+  mask_wo_eyes: "./data/masks/mask_wo_eyes.png"
+  mask_wo_eyes_hands_feet: "./data/masks/mask_wo_eyes_hands_feet.png"
+  mask_wo_head_eyes_hands_feet: "./data/masks/mask_wo_head_eyes_hands_feet.png"
+  mouse: "./data/masks/mouse_mask.png"
+
+models:
+  smplx_div2_template: "./data/smplx/smplx_div2_template.obj"
+  face_clip_norm: "./data/face/norm_v_d2_clip_format.obj"
+  smplx_div2_star_template: "./data/smplx/smplx_div2_star_template.obj"
+  smplx_eyes: "./data/face/eye_faces.obj"
+  smplx_template_root: "./data/models"
+
+index:
+  face_verts_index: "./data/face/face_verts_index_refine.npy"
+  hands_feet_verts_index: "./data/smplx/hands_feet_verts_index.npy"
+  flame_to_smplx_verts_index: "./data/face/flame2smplx_tex_1024.npy"
+
+others:
+  smplx_div2_skinning_weights: "./data/skinning_weights/lbs_weights_divide2.npy"
+  smplx_official_template_root: "./data/smplx"
+
+configs:
+  default_sns: "./lib/configs/default_sns.yaml"
+  default_inpaint: "./lib/configs/default_inpaint.yaml"
+  default_refine: "./lib/configs/default_refine.yaml"
+

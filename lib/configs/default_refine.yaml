@@ -1,0 +1,25 @@
+name: "REFINE"
+ckpt_dir: "./save/ckpt/refine"
+results_path: "./save/results/refine"
+
+model:
+  uv_channels: 12
+  image_channels: 3
+  normal_channels: 6
+  out_channels: 1
+
+test:
+  batch_size: 1
+  output_dir: "results"
+  ckpt_path: "./save/ckpt/refine.pth"
+  smooth_iter: 3
+  smooth_lambda: 0.5
+  refine_iter: 2
+  normal_flip: False
+  data_root: "./examples"
+  inpaint_mesh_root: "./save/results/inpaint/results"
+  load_size: 1024
+  subjects: ["demo_image_w_gt_smplx"]
+
+train:
+

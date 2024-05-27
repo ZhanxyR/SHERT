@@ -1,0 +1,39 @@
+name: "INPAINT"
+ckpt_dir: "./save/ckpt/inpaint"
+results_path: "./save/results/inpaint"
+monitor_path: "./save/monitor/inpaint"
+
+model:
+  uv_channels: 15
+  bilinear: true
+
+test:
+  batch_size: 1
+  output_dir: "results"
+  ckpt_path: "./save/ckpt/inpaint.pth"
+  data_root: "./examples"
+  load_size: 1024
+  subjects: ["demo_image_w_gt_smplx"] #empty means all subjects under data_root
+  use_smplx_face: False
+
+train:
+  batch_size: 2
+  epochs: 250
+  monitor_steps: 50
+  lr: 0.000001
+  weight_decay: 0.00000001
+  momentum: 0.999
+  ckpt_path:
+  dataset:
+    data_root: "/home/zxy/workspace/datasets/THuman2.0/THUman20_Release_Smpl-X_Paras"
+    sns_root: "/home/zxy/workspace/datasets/THuman2.0/SNS"
+    load_size: 1024
+    subjects: []
+    val_subjects: ["0000"]
+    test_subject_range: [500, 525]
+
+
+
+
+
+
