@@ -1,17 +1,12 @@
 import os
 import sys
-
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import logging
 import cv2
 import torch
 from torch.utils.data import DataLoader
 import numpy as np
 from tqdm import tqdm
-
 import open3d as o3d
-import pytorch3d.structures
 
 from lib.utils.config import get_cfg_defaults
 from lib.models.RefineUNet import RefineUNet
@@ -76,13 +71,16 @@ def evaluate_refine(sampler, model, dataset, cfg, cfg_resources, device, save_ro
 
             pred_full_uv = pred_disp * uv_mask * inpaint_normal_uv + inpaint_uv
             pred_full_verts = sampler.resample(pred_full_uv)
-            pred_mesh = pytorch3d.structures.Meshes(verts=pred_full_verts, faces=smplx_faces_tensor - 1)
-            pred_vertex_normals = pred_mesh.verts_normals_padded()
-            pred_normal_uv = sampler.get_UV_map(pred_vertex_normals)
 
-            # example iter
-            inpaint_uv = pred_full_uv
-            inpaint_normal_uv = pred_normal_uv
+            if cfg_test_refine_iter > 1:
+                import pytorch3d.structures
+                pred_mesh = pytorch3d.structures.Meshes(verts=pred_full_verts, faces=smplx_faces_tensor - 1)
+                pred_vertex_normals = pred_mesh.verts_normals_padded()
+                pred_normal_uv = sampler.get_UV_map(pred_vertex_normals)
+
+                # example iter
+                inpaint_uv = pred_full_uv
+                inpaint_normal_uv = pred_normal_uv
 
             if save_root is not None:
                 # econ_calib
