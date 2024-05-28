@@ -1,6 +1,5 @@
 import numpy as np
 import logging
-import traceback
 import torch
 import argparse
 import os
