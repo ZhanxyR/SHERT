@@ -2,6 +2,8 @@
 ### 1. Start
 Start from creating a conda environment.
 ```bash
+git clone https://github.com/ZhanxyR/SHERT.git
+cd SHERT
 conda create -n shert python=3.8
 conda activate shert
 ```

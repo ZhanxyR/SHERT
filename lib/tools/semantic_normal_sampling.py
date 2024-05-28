@@ -17,6 +17,8 @@ from lib.utils.common_util import check_key
 from lib.utils.image_util import write_pic
 from lib.utils.config import  get_cfg_defaults
 
+import pyembree # Neccesary for acceleration
+
 
 class Semantic_Normal_Sampling():
     

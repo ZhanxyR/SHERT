@@ -20,7 +20,7 @@ index:
   flame_to_smplx_verts_index: "./data/face/flame2smplx_tex_1024.npy"
 
 others:
-  smplx_div2_skinning_weights: "./data/skinning_weights/lbs_weights_divide2.npy"
+  smplx_div2_skinning_weights: "./data/smplx/lbs_weights_divide2.npy"
   smplx_official_template_root: "./data/smplx"
 
 configs:
