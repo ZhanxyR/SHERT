@@ -1,0 +1,12 @@
+diffusers
+accelerate
+zerorpc
+tqdm
+opencv-python
+compel
+open3d==0.10.0
+scikit-image
+trimesh
+pyembree
+smplx
+yacs
