@@ -72,7 +72,7 @@ def evaluate_refine(sampler, model, dataset, cfg, cfg_resources, device, save_ro
             pred_full_uv = pred_disp * uv_mask * inpaint_normal_uv + inpaint_uv
             pred_full_verts = sampler.resample(pred_full_uv)
 
-            if cfg_test_refine_iter > 1:
+            if cfg_test.refine_iter > 1:
                 import pytorch3d.structures
                 pred_mesh = pytorch3d.structures.Meshes(verts=pred_full_verts, faces=smplx_faces_tensor - 1)
                 pred_vertex_normals = pred_mesh.verts_normals_padded()
