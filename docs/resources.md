@@ -1,6 +1,6 @@
 ### Download Required Data
 
-Selective to dowload `data/smplx`, `data/face`, and `data/cameras` from [NJU-Box](https://box.nju.edu.cn/d/a7feb0bf42014f97ae50/) or [Google-Drive]().
+Selective to dowload `data/smplx` and `data/face` from [NJU-Box](https://box.nju.edu.cn/d/a7feb0bf42014f97ae50/) or [Google-Drive]().
 
 Dowload SMPLX Model(Male, Female, Neutral) from [SMPL-X](smpl-x.is.tue.mpg.de) and put them to `data/models`.
 

@@ -20,13 +20,13 @@ We recommend you to install a specific version of opend3d manually to avoid any 
 pip install open3d==0.10.0
 ```
 
-### 3. Install Other Dependencies
+### 4. Install Other Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Build Pytorch3D
+### 5. Build Pytorch3D
 Follow [Pytorch3D](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md#building--installing-from-source). We recommend to build from source code. 
 
 The version we used is v0.7.6, while the lower versions should also be applicable.
