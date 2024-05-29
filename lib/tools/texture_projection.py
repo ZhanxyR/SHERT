@@ -29,7 +29,10 @@ def ray_cast(mesh, rays):
 def ray_cast_trimesh(mesh):
     vertices = np.asarray(mesh.vertices)
     front_orient = np.zeros(len(vertices))
-    for i in tqdm(range(len(vertices))):
+    
+    pbar = tqdm(range(len(vertices)))
+    pbar.set_description('Visible')
+    for i in pbar:
         intersection = mesh.ray.intersects_id([vertices[i] + np.asarray([0., 0., 1e-7])], [[0., 0., 1.]],
                                               multiple_hits=True,
                                               return_locations=False)

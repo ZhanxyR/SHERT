@@ -19,7 +19,7 @@ class InapintEvalDataset(Dataset):
         self.cfg = cfg
         self.resources = cfg_resources
         self.inputs = inputs
-        self.transform = transforms.Compose([transforms.ToTensor(), transforms.Resize(self.cfg.load_size)])
+        self.transform = transforms.Compose([transforms.ToTensor(), transforms.Resize(self.cfg.load_size, antialias=True)])
 
         if cfg.use_smplx == 'head':
             self.uv_mask = cv2.imread(self.resources.masks.mask_wo_head_eyes_hands_feet, cv2.IMREAD_GRAYSCALE)/255
