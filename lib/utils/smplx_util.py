@@ -40,15 +40,3 @@ def back_to_econ_axis(vertices, param, view_id):
     vertices = vertices * param['scale'] / 100
     return inverse_rot(vertices, view_id)
 
-def load_smplx_param(smplx_param_path):
-    _, ext = os.path.splitext(smplx_param_path)
-    ext = ext.lower()
-    if ext == ".npy":
-        smplx_param = np.load(smplx_param_path, allow_pickle=True).item()
-    elif ext == ".pkl":
-        smplx_param = pickle.load(open(smplx_param_path, "rb"))
-    else:
-        smplx_param = None
-        print("smplx param ext {}".format(ext))
-        raise Exception("smplx_param_path extension does not match!")
-    return smplx_param

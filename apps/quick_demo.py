@@ -42,6 +42,9 @@ def load_config(args):
     elif args.example == 'scan':
         # Use THuman scan and gt-fitted smplx.
         cfg_path = './examples/demo_scan/config.yaml'
+    elif args.example == 'image':
+        # Given only image and predict with ECON.
+        cfg_path = './examples/demo_image/config.yaml'
     else:
         # TODO: more, batch
         raise Exception(f'Not ready for example \'{args.example}\'. Coming soon.')

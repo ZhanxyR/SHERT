@@ -37,21 +37,29 @@ class InapintEvalDataset(Dataset):
         data = self.inputs[idx]
 
         smplx_param = load_smplx_param(data['smplx_param'])
+        if 'translation' in smplx_param.keys():
+            for key in smplx_param.keys():
+                smplx_param[key] = np.asarray(smplx_param[key])
+            translation = smplx_param["translation"]
+        else:
+            for key in smplx_param.keys():
+                smplx_param[key] = smplx_param[key].detach().numpy()
+            translation = smplx_param["transl"]
 
         smplx_star_mesh = o3d.io.read_triangle_mesh(data['smplx_star'])
-        smplx_star_mesh.vertices = o3d.utility.Vector3dVector(transfer_to_std_smplx(smplx_star_mesh.vertices,  smplx_param["scale"], smplx_param["translation"]))
+        smplx_star_mesh.vertices = o3d.utility.Vector3dVector(transfer_to_std_smplx(smplx_star_mesh.vertices, smplx_param["scale"], translation))
         smplx_star_vertices = np.asarray(smplx_star_mesh.vertices)
         smplx_star_mesh.compute_vertex_normals()
         smplx_star_normals = np.asarray(smplx_star_mesh.vertex_normals)
 
         smplx_mesh = o3d.io.read_triangle_mesh(data['subsmplx'])
-        smplx_mesh.vertices = o3d.utility.Vector3dVector(transfer_to_std_smplx(smplx_mesh.vertices,  smplx_param["scale"], smplx_param["translation"]))
+        smplx_mesh.vertices = o3d.utility.Vector3dVector(transfer_to_std_smplx(smplx_mesh.vertices, smplx_param["scale"], translation))
         smplx_vertices = np.asarray(smplx_mesh.vertices)
         smplx_mesh.compute_vertex_normals()
         smplx_normals = np.asarray(smplx_mesh.vertex_normals)
 
         sns_mesh = o3d.io.read_triangle_mesh(data['sampled_mesh'])
-        sns_mesh.vertices = o3d.utility.Vector3dVector(transfer_to_std_smplx(sns_mesh.vertices,  smplx_param["scale"], smplx_param["translation"]))
+        sns_mesh.vertices = o3d.utility.Vector3dVector(transfer_to_std_smplx(sns_mesh.vertices, smplx_param["scale"], translation))
         sns_vertices = np.asarray(sns_mesh.vertices)
 
         # TODO: add dilation
@@ -60,6 +68,7 @@ class InapintEvalDataset(Dataset):
         displacement = projection_length(sns_vertices - smplx_vertices, smplx_normals)
         displacement = np.repeat(displacement, 3, axis=-1)
         star_vertices = smplx_star_vertices + displacement * smplx_star_normals
+
 
         # transform
         if self.transform:
@@ -75,5 +84,5 @@ class InapintEvalDataset(Dataset):
                 "star_vertices": torch.from_numpy(star_vertices).float(),
                 "error_uv_mask": error_uv_mask.float(),
                 "param_scale": smplx_param["scale"],
-                "param_translation": smplx_param["translation"],
+                "param_translation": translation,
                 }
