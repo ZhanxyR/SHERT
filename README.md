@@ -12,7 +12,7 @@
     ·
     <a href="https://scholar.google.com.hk/citations?user=Sx4PQpQAAAAJ&hl=en" rel="external nofollow noopener" target="_blank"><strong>Jie Guo</strong></a>
     ·
-    <a href="https://cs.nju.edu.cn/ywguo/index.htm" rel="external nofollow noopener" target="_blank"><strong>Yanwen Guo*</strong></a>
+    <a href="https://cs.nju.edu.cn/ywguo/index.htm" rel="external nofollow noopener" target="_blank"><strong>Yanwen Guo</strong></a>
     ·
     <a href="https://www.cs.hku.hk/people/academic-staff/wenping" rel="external nofollow noopener" target="_blank"><strong>Wenping Wang</strong></a>
   </p>
