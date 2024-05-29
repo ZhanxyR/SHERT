@@ -49,7 +49,9 @@ Follow [Pytorch](https://pytorch.org/get-started/previous-versions/).
 We recommend to use `Pytorch >= 2.0`. While lower versions (lowest tested on `1.13`) may require more GPU memory in texture inpainting.
 
 ### 3. Install Open3d
-We recommend you to install a specific version of open3d manually to avoid any problem.
+
+> [!IMPORTANT]
+> We recommend you to install a specific version of open3d manually to avoid any problem.
 
 (We will fix the bugs to adapt to higher versions later.)
 ```bash
@@ -68,7 +70,7 @@ Follow [Pytorch3D](https://github.com/facebookresearch/pytorch3d/blob/main/INSTA
 The version we used is `v0.7.6`, while the lower versions should also be applicable.
 
 > [!NOTE]
-> (If you have any troubles in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.)
+> If you have any troubles in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.
 
 ### 6. Download Required Data and Checkpoints
 
