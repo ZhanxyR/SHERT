@@ -18,11 +18,10 @@ def flame_resample(verts, flame_sampler):
 
     return flame_uv
 
-def flame_to_smplx(verts, cfg_resources, device, flame_texture=None, mouse_correct=True):
+def flame_to_smplx(verts, cfg_resources, smplx_sampler, device, flame_texture=None, mouse_correct=True):
 
     flame_sampler = FLAME_UV_Generator(UV_height=512, UV_width=-1, uv_type='MFLAME', data_dir='data/face').to(device)
-    smplx_sampler = Index_UV_Generator(UV_height=1024, UV_width=-1, uv_type='SMPLX', data_dir='data/smplx').to(device)
-    # cached_data = np.load('data/face/flame2smplx_tex_1024.npy', allow_pickle=True, encoding = 'latin1').item()
+    # smplx_sampler = Index_UV_Generator(UV_height=1024, UV_width=-1, uv_type='SMPLX', data_dir='data/smplx').to(device)
     cached_data = np.load(cfg_resources.index.flame_to_smplx_verts_index, allow_pickle=True, encoding = 'latin1').item()
     smplx_texture = np.zeros((1024, 1024, 3))
 
@@ -36,7 +35,6 @@ def flame_to_smplx(verts, cfg_resources, device, flame_texture=None, mouse_corre
     # write_pic($path$, smplx_uv)
     smplx_uv = np.flip(smplx_uv)
     smplx_uv = np.fliplr(smplx_uv)
-
 
     if mouse_correct:
 
@@ -52,7 +50,6 @@ def flame_to_smplx(verts, cfg_resources, device, flame_texture=None, mouse_corre
         mouse_mask = cv2.cvtColor(mouse_mask, cv2.COLOR_BGR2RGB) / 255.
         mouse_mask = mouse_mask[:, :, 0]
         smplx_uv = inpaint.inpaint_biharmonic(smplx_uv, mouse_mask, channel_axis=2)
-
 
     smplx_uv_t = torch.from_numpy(smplx_uv.copy()).float().to(device)
     smplx_vert_resample = smplx_sampler.resample(smplx_uv_t.unsqueeze(0))

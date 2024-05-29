@@ -10,7 +10,7 @@ from lib.tools.subdivide_smplx import subdivide
 from lib.tools.semantic_normal_sampling import Semantic_Normal_Sampling
 from lib.tools.gen_smplx import gen_star_smplx
 from lib.tools.texture_projection import texture_projection
-from lib.tools.face_substitution import face_smooth
+from lib.tools.face_substitution import face_smooth, face_substitution
 from lib.datasets.InpaintEvalDataset import InapintEvalDataset
 from lib.datasets.RefineEvalDataset import RefineEvalDataset
 from lib.models.InpaintUNet import InpaintUNet
@@ -23,7 +23,7 @@ def parse():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-g', '--gpu', type=int, default=0, help='The GPU device to be used.')
-    parser.add_argument('-e', '--example', type=str, default='scan', choices=['scan', 'image', 'image_w_gt'])
+    parser.add_argument('-e', '--example', type=str, default='image_w_gt', choices=['scan', 'image', 'image_w_gt'])
     parser.add_argument('-i', '--input', type=str, default=None, help='The root path used for files loading.')
     parser.add_argument('-o', '--output', type=str, default=None, help='The folder used for output. Default as \'$root$/results\'.')
     parser.add_argument('-c', '--config', type=str, default='config.yaml', help='The config file name in root.')
@@ -169,7 +169,6 @@ if __name__ == '__main__':
             # Define in the config.yaml to skip
             logging.info(f'Use given \'Star-SMPLX\'.')
 
-
         '''
         Completion
         '''
@@ -194,7 +193,6 @@ if __name__ == '__main__':
 
             # process
             # TODO: add dilation
-            # TODO: smplx face rather than smplx head
             test_dataset = InapintEvalDataset([files], cfg_inpaint.test, cfg_resources)
             _, _, _, completed_mesh = evaluate_inpaint(uv_sampler, model, test_dataset, cfg_inpaint, cfg_resources, device, save_root=save_root)
 
@@ -203,18 +201,22 @@ if __name__ == '__main__':
         else:
             logging.info(f'Skip \'Completion\'.')
 
-
         '''
         Face substitution with EMOCA
         '''
-        if not (check_key(cfg, ['settings', 'face_emoca']) and not cfg.settings.face_emoca):
+        if not (check_key(cfg, ['settings', 'use_emoca_face']) and not cfg.settings.use_emoca_face):
             if not check_key(cfg, ['files', 'emoca_face']):
                 # Predict detailed face with EMOCA
                 # TODO:
-                logging.warning('Ignore! Please provide EMOCA result manually.')
+                logging.warning('Ignore! Please provide EMOCA result manually. Example in \'./examples/demo_image_w_gt_smplx/emoca_face.obj\'')
             else:
-                pass
-        
+                # used inputs
+                check_files(files, ['completed_mesh', 'subsmplx', 'emoca_face'])
+                logging.info('Substitute with detailed face.')
+
+                face_substitution_path = face_substitution(files, cfg_resources, uv_sampler, device, save_root=save_root)
+
+                files['completed_mesh'] = face_substitution_path
 
         '''
         Face smooth

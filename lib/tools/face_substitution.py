@@ -9,6 +9,7 @@ from lib.utils.mesh_util import load_obj, save_obj, get_rotate_matrix
 from lib.utils.mesh_util import norm_to_0_1, backup, norm_a_b, norm_with_scale, norm_to_center, back_center, norm_with_center_param
 from lib.utils.uv_sample.flame_uv_generator import FLAME_UV_Generator
 from lib.utils.uv_sample.divided_uv_generator import Index_UV_Generator
+from lib.tools.flame_to_smplx import flame_to_smplx
 
 
 def face_icp_refine(source, target, vertex_index):
@@ -78,6 +79,9 @@ def face_clip_smooth(verts, faces, index, smooth=True, factor=10):
     return v_sample, faces_new
 
 def face_rotate_align(verts, faces, smplx_verts, smplx_faces, face_vertex_index, interim_out=False):
+
+    faces = faces - 1
+    smplx_faces = smplx_faces - 1
 
     # _, _, rot_face = load_obj("data/face/norm_v_d2_clip_format.obj")
     rot_y, rot_x = get_rotate_matrix(verts[face_vertex_index], faces)
@@ -187,6 +191,36 @@ def face_smooth(mesh_path, cfg_resources, sampler, device, save_root=None):
         return save_path
 
     return vertices
+
+def face_substitution(files, cfg_resources, sampler, device, save_root=None):
+
+    # flame to smplx
+    verts, _, _ = load_obj(files['emoca_face'])
+    v_face_sample, _ = flame_to_smplx(verts, cfg_resources, sampler, device)
+    v_face_sample = v_face_sample[0].detach().cpu().numpy()
+
+    face_vertex_index = np.load(cfg_resources.index.face_verts_index)
+
+    # subsmplx
+    v_sample, vts, faces = load_obj(files['subsmplx'])
+    v_d2, faces_d2 = face_clip_smooth(v_sample, faces, face_vertex_index, smooth=True)
+
+    # align
+    v_ori, _, f_ori = load_obj(files['completed_mesh'])
+    _, _, rot_face = load_obj(cfg_resources.models.face_clip_norm)
+    verts = face_rotate_align(v_face_sample, rot_face, v_d2, faces_d2, face_vertex_index)
+    v_ori[face_vertex_index] = verts[face_vertex_index]
+
+    if save_root is not None:
+        save_path = os.path.join(save_root, 'face_substitution.obj')
+        save_obj(v_ori, f_ori, save_path, single=True)
+
+        return save_path
+    
+    return v_ori
+
+
+
 
 
 
