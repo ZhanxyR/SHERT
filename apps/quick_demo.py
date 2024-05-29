@@ -39,13 +39,13 @@ def load_config(args):
         if not os.path.exists(cfg_path):
             raise Exception(f'Can not find \'{args.config}\' in given root \'{args.input}\'.')
     elif args.example == 'image_w_gt':
-        # Use image-pred mesh and gt-fitted smplx.
+        # Use image-pred mesh and fitted smplx.
         cfg_path = './examples/demo_image_w_gt_smplx/config.yaml'
     elif args.example == 'scan':
-        # Use THuman scan and gt-fitted smplx.
+        # Use THuman scan and fitted smplx.
         cfg_path = './examples/demo_scan/config.yaml'
     elif args.example == 'image':
-        # Given only image and predict with ECON.
+        # Given only image and predict all inputs with ECON.
         cfg_path = './examples/demo_image/config.yaml'
     else:
         # TODO: more, batch

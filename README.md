@@ -33,6 +33,29 @@
   ## (Preparing, coming soon)
   ### Thank you for your interest in this repository. We are currently in the process of converting model formats and finalizing scripts. The code will be released at a later time.
 
+## Installation
+
+- Build environment. See [install](docs/install.md).
+- Download required data. See [resources](docs/resources.md).
+
+## Demo
+
+The whole processes include two steps: `reconstruction` and `texture inpainting`.
+
+Run `quick_demo` to test `reconstruction` in given resources. The results will be saved to `./examples/$subject$/results`.
+
+```bash
+# Use ECON-pred mesh and fitted smplx.
+python -m apps.quick_demo
+
+# Use THuman scan and fitted smplx.
+python -m apps.quick_demo -e scan
+
+# Given only image and predict all inputs with ECON.
+python -m apps.quick_demo -e image
+```
+
+
 ## Acknowledgments
 
 This work was supported by the National Natural Science Foundation of China (No. 62032011) and the Natural Science Foundation of Jiangsu Province (No. BK20211147).
