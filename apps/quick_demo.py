@@ -9,6 +9,7 @@ from lib.utils.uv_sample.divided_uv_generator import Index_UV_Generator
 from lib.tools.subdivide_smplx import subdivide
 from lib.tools.semantic_normal_sampling import Semantic_Normal_Sampling
 from lib.tools.gen_smplx import gen_star_smplx
+from lib.tools.texture_projection import texture_projection
 from lib.datasets.InpaintEvalDataset import InapintEvalDataset
 from lib.datasets.RefineEvalDataset import RefineEvalDataset
 from lib.models.InpaintUNet import InpaintUNet
@@ -185,6 +186,7 @@ if __name__ == '__main__':
 
             # process
             # TODO: add dilation
+            # TODO: smplx face rather than smplx head
             test_dataset = InapintEvalDataset([files], cfg_inpaint.test, cfg_resources)
             _, _, _, completed_mesh = evaluate_inpaint(uv_sampler, model, test_dataset, cfg_inpaint, cfg_resources, device, save_root=save_root)
 
@@ -232,11 +234,27 @@ if __name__ == '__main__':
         # Face smooth
         # TODO:
 
-        # Color projection
-        # TODO:
+        
+        # Color projection (By default, we use the completed mesh)
+        if not (check_key(cfg, ['settings', 'color_projection']) and not cfg.settings.color_projection):
+            # used inputs  (camera is not needed for ECON)
+            check_files(files, ['completed_mesh', 'image', 'mask'])
+
+            if check_key(cfg, ['files', 'camera']):
+                logging.info(f'Start \'Color projection\' with given camera parameters.')
+                texture_projection(files, cfg, cfg_resources, uv_sampler, device, save_root=save_root, camera_param_path=files['camera'])
+            else:
+                logging.info(f'Start \'Color projection\' with default camera parameters.')
+                texture_projection(files, cfg, cfg_resources, uv_sampler, device, save_root=save_root)
 
         # Use EMOCA facial texture
         # TODO: 
+
+        # Down sample
+        # TODO:
+
+        # Animation
+        # TODO:
 
 
     except Exception as e:

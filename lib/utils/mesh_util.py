@@ -1,4 +1,5 @@
 import  numpy as np
+import os
 import open3d as o3d
 
 def load_obj(file):
@@ -29,7 +30,6 @@ def save_obj(verts, faces, path_out, single=False, vts=None, colors=None):
             for i in range(len(verts)):
                 vi_np = np.array(verts[i])
                 color_np = np.array(colors[i])
-                # fp.write('v %f %f %f\n' % (vi_np[0], vi_np[1], vi_np[2]))
                 fp.write('v %f %f %f %f %f %f\n' % (vi_np[0], vi_np[1], vi_np[2], color_np[0], color_np[1], color_np[2]))
         else:
             for vi in verts:
@@ -66,21 +66,38 @@ def projection_length(a, b):
 
     return dot_product / b_norm
 
-def save_mtl(p, faces, vts, path_out):
-    with open(path_out, 'w') as fp:
-        fp.write('mtllib deca.mtl\n')
-        fp.write('usemtl FaceTexture\n')
-        for vi in p:
-            vi_np = np.array(vi)
-            fp.write('v %f %f %f\n' % (vi_np[0], vi_np[1], vi_np[2]))
+def save_mtl(verts, faces, vts, mesh_path, mtl_path, mtl_name, colors=None):
+
+    with open(mesh_path, 'w') as fp:
+        fp.write('mtllib texture.mtl\n')
+        fp.write('usemtl texture\n')
+
+        if colors is not None:
+            for i in range(len(verts)):
+                vi_np = np.array(verts[i])
+                color_np = np.array(colors[i])
+                # fp.write('v %f %f %f\n' % (vi_np[0], vi_np[1], vi_np[2]))
+                fp.write('v %f %f %f %f %f %f\n' % (vi_np[0], vi_np[1], vi_np[2], color_np[0], color_np[1], color_np[2]))
+        else:
+            for vi in verts:
+                vi_np = np.array(vi)
+                fp.write('v %f %f %f\n' % (vi_np[0], vi_np[1], vi_np[2]))
+
         for vt in vts:
             vt_np = np.array(vt)
             fp.write("vt %f %f\n" % (vt_np[0], vt_np[1]))
+
         for fi in faces:
             ft = np.array(fi)
             fp.write('f %d/%d %d/%d %d/%d\n' % (ft[0][0], ft[0][1], ft[1][0], ft[1][1], ft[2][0], ft[2][1]))
 
-
+    with open(mtl_path, 'w') as fp:
+        fp.write('newmtl texture\n')
+        fp.write('Ka 0.20000000 0.20000000 0.20000000\n')
+        fp.write('Kd 1.00000000 1.00000000 1.00000000\n')
+        fp.write('Ks 1.00000000 1.00000000 1.00000000\n')
+        fp.write('Ns 0.00000000\n')
+        fp.write(f'map_Kd {mtl_name}\n')
 
 # center norm
 def norm_point(points, align=True):

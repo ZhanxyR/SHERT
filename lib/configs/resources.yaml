@@ -13,7 +13,8 @@ models:
   smplx_div2_star_template: "./data/smplx/smplx_div2_star_template.obj"
   smplx_eyes: "./data/face/eye_faces.obj"
   smplx_template_root: "./data/models"
-
+  smplx_vts_template: "./data/smplx/vt_example.obj"
+  
 index:
   face_verts_index: "./data/face/face_verts_index_refine.npy"
   hands_feet_verts_index: "./data/smplx/hands_feet_verts_index.npy"
