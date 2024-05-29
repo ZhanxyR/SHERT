@@ -35,8 +35,66 @@
 
 ## Installation
 
-- Build environment. See [install](docs/install.md).
-- Download required data. See [resources](docs/resources.md).
+### 1. Get Started
+Start from creating a conda environment.
+```bash
+git clone https://github.com/ZhanxyR/SHERT.git
+cd SHERT
+conda create -n shert python=3.8
+conda activate shert
+```
+### 2. Install Pytorch
+Follow [Pytorch](https://pytorch.org/get-started/previous-versions/).
+
+We recommend to use `Pytorch >= 2.0`. While lower versions (lowest tested on `1.13`) may require more GPU memory in texture inpainting.
+
+### 3. Install Open3d
+We recommend you to install a specific version of opend3d manually to avoid any problem.
+
+(We will fix the bugs to adapt to higher versions later.)
+```bash
+pip install open3d==0.10.0
+```
+
+### 4. Install Other Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Build Pytorch3D
+Follow [Pytorch3D](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md#building--installing-from-source). We recommend to build from source code. 
+
+The version we used is `v0.7.6`, while the lower versions should also be applicable.
+
+(If you have any troubles in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.)
+
+### 6. Download Required Data and Checkpoints
+
+Selective to dowload `data/smplx`, `data/face`, and `save/ckpt` from [NJU-Box](https://box.nju.edu.cn/d/a7feb0bf42014f97ae50/) or [Google-Drive](https://drive.google.com/drive/folders/1UokzpgQNGe3q-vdvrWQpD3FreFNy7MmS?usp=sharing).
+
+Dowload SMPL-X v1.1 Model(Male, Female, Neutral) from [SMPL-X](https://smpl-x.is.tue.mpg.de) and put them to `data/models`.
+
+The completed structure should be like:
+
+```
+|-- SHERT
+    |-- data
+        |-- cameras
+        |-- masks
+        |-- smplx
+        |-- face
+        |-- models
+            |-- smplx
+                |-- SMPLX_*.npz
+    |-- save
+        |-- ckpt
+            |-- inpaint.pth     # For mesh completion
+            |-- refine.pth      # For mesh refinement
+            |-- texture_local   # For texture inpainting
+            |-- texture_global  # For texture repainting
+```
+
 
 ## Demo
 
