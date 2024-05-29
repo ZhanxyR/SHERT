@@ -67,7 +67,8 @@ Follow [Pytorch3D](https://github.com/facebookresearch/pytorch3d/blob/main/INSTA
 
 The version we used is `v0.7.6`, while the lower versions should also be applicable.
 
-(If you have any troubles in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.)
+> [!NOTE]
+> (If you have any troubles in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.)
 
 ### 6. Download Required Data and Checkpoints
 
