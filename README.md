@@ -33,6 +33,13 @@
   ## (Preparing, coming soon)
   ### Thank you for your interest in this repository. We are currently in the process of converting model formats and finalizing scripts. The code will be released at a later time.
 
+## Overview
+- [1 - Installation](#installation)
+- [2 - Demo](#demo)
+- [3 - Acknowledgments](#acknowledgments)
+- [4 - Citation](#citation)
+- [5 - Contact](#contact)
+
 ## Installation
 
 ### 1. Get Started
@@ -71,6 +78,7 @@ The version we used is `v0.7.6`, while the lower versions should also be applica
 
 > [!NOTE]
 > If you have any troubles in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.
+<br>(e.g. `./examples/scan/config.yaml`)
 
 ### 6. Download Required Data and Checkpoints
 
@@ -103,7 +111,7 @@ The completed structure should be like:
 
 The whole processes include two steps: `reconstruction` and `texture inpainting`.
 
-Run `quick_demo` to test `reconstruction` in given resources. The results will be saved to `./examples/$subject$/results`.
+⚡ Run `quick_demo` to test `reconstruction` in given resources. The results will be saved to `./examples/$subject$/results`.
 
 ```bash
 # Use ECON-pred mesh and fitted smplx.
