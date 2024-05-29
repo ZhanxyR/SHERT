@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import math
 import cv2
 import torch
 import open3d as o3d
@@ -116,23 +117,21 @@ def face_rotate_align(verts, faces, smplx_verts, smplx_faces, face_vertex_index,
     return rot_back_v_face_sample
 
 
-def face_bound_smooth(verts, faces, face_mask, device, inner_iter=15, outer_iter=5, smooth_iter=15, smooth_lamba=0.5):
+def face_bound_smooth(verts, faces, face_mask, sampler, device, inner_iter=15, outer_iter=5, smooth_iter=15, smooth_lamba=0.5):
 
-    sampler = Index_UV_Generator(UV_height=1024, UV_width=-1, uv_type='SMPLX', data_dir='data/smplx').to(device)
+    faces = faces[..., 0].copy() - 1
 
     kernel = np.array([[0, 1, 0],
                         [1, 1, 1],
                         [0, 1, 0]]).astype(np.uint8)
-    face_mask_d5 = cv2.dilate(face_mask.astype(np.uint8), kernel, iterations=outer_iter)
-    face_mask_d5 = face_mask_d5 * (1 - face_mask)
-    face_mask_d5[700:800,250:350] = 0.
-    # cv2.imwrite(os.path.join(outout_dir, "face_mask_d5.png"), face_mask_d5 * 255.)
-    face_mask_d10 = cv2.dilate(face_mask_d5.astype(np.uint8), kernel, iterations=inner_iter)
-    face_mask_d10 = face_mask_d10 * (face_mask_d5 + face_mask)
-    # print(np.unique(face_mask_d10))
-    # cv2.imwrite(os.path.join(outout_dir, "face_mask_d10.png"), face_mask_d10*255.)
+                        
+    face_mask_outer = cv2.dilate(face_mask.astype(np.uint8), kernel, iterations=outer_iter)
+    face_mask_outer = face_mask_outer * (1 - face_mask)
+    face_mask_outer[700:800,250:350] = 0.
+    face_mask_inner = cv2.dilate(face_mask_outer.astype(np.uint8), kernel, iterations=inner_iter)
+    face_mask_full = face_mask_inner * (face_mask_outer + face_mask)
 
-    mask = np.repeat(face_mask_d10[:,:,None],3,axis=-1)
+    mask = np.repeat(face_mask_full[:,:,None],3,axis=-1)
     mask_tensor = torch.from_numpy(mask).unsqueeze(dim=0).to(device=device).float()
     mask_tensor[mask_tensor != 0.] = 1.
     verts_max = sampler.resample(mask_tensor)[0].detach().cpu().numpy()
@@ -141,12 +140,15 @@ def face_bound_smooth(verts, faces, face_mask, device, inner_iter=15, outer_iter
     verts_diff = verts_max - verts_min
     verts_diff = verts_diff.sum(axis=-1)
     # print("where", len(np.where(verts_diff != 0)))
+
     face_bound_verts_index = sorted(list(np.where(verts_diff != 0)[0]))
-    # print(face_bound_verts_index)
     face_bound_verts_map = {}
+
     for i in range(len(face_bound_verts_index)):
         face_bound_verts_map[face_bound_verts_index[i]] = i
+
     face_bound_faces = []
+
     for i in range(faces.shape[0]):
         if face_bound_verts_map.get(faces[i][0]) is not None and face_bound_verts_map.get(
                 faces[i][1]) is not None and face_bound_verts_map.get(faces[i][2]) is not None:
@@ -155,6 +157,7 @@ def face_bound_smooth(verts, faces, face_mask, device, inner_iter=15, outer_iter
     face_bound_verts_index = np.asarray(face_bound_verts_index)
     face_bound_verts = verts[face_bound_verts_index]
     face_bound_faces = np.asarray(face_bound_faces)
+
     bound_mesh = o3d.geometry.TriangleMesh()
     bound_mesh.vertices = o3d.utility.Vector3dVector(face_bound_verts)
     bound_mesh.triangles = o3d.utility.Vector3iVector(face_bound_faces)
@@ -163,65 +166,27 @@ def face_bound_smooth(verts, faces, face_mask, device, inner_iter=15, outer_iter
     smoothed_mesh = bound_mesh.filter_smooth_laplacian(smooth_iter, smooth_lamba)
     smoothed_bound_verts = np.asarray(smoothed_mesh.vertices)
 
-    import math
     for org_vertex, mapped_vertex in face_bound_verts_map.items():
         # if face_template_verts_map.get(org_vertex) is not None:
         if math.isnan(smoothed_bound_verts[mapped_vertex][0]) or math.isnan(smoothed_bound_verts[mapped_vertex][1]) or math.isnan(smoothed_bound_verts[mapped_vertex][2]):
             continue
         verts[org_vertex] = smoothed_bound_verts[mapped_vertex]
     
-    return face_mask_d10, verts
+    return verts
 
+def face_smooth(mesh_path, cfg_resources, sampler, device, save_root=None):
 
-# if __name__=='__main__':
+    vertices, _, faces = load_obj(mesh_path)
+    face_mask = cv2.imread(cfg_resources.masks.face_uv_refine, cv2.IMREAD_GRAYSCALE) / 255
+    vertices = face_bound_smooth(vertices, faces, face_mask, sampler, device)
 
-#     cfg_resources = get_cfg_defaults("lib/configs/resources.yaml")
+    if save_root is not None:
+        save_path = os.path.join(save_root, 'face_smoothed.obj')
+        save_obj(vertices, faces, save_path, single=True)
 
+        return save_path
 
-#     # face_vertex_index = np.load('data/face/face_vertex_index_refine.npy')
-#     face_vertex_index = np.load(cfg_resources.index.face_verts_index)
-
-#     # SMPLX-d2
-#     # v_sample, vts, faces = load_obj("zxy_debug/example/0524/0524_econ_comp.obj")
-#     v_sample, vts, faces = load_obj("zxy_debug/example/0524/divided_2.obj")
-#     v_d2, faces_d2_new = face_clip_smooth(v_sample, faces, face_vertex_index, smooth=True)
-#     # save_obj(v_d2.copy(), faces_d2_new.copy(), "zxy_debug/example_out/smplx_face_format_econ_smooth_my.obj", single=True)
-
-#     # FLAME-detailed
-#     pred_face_path = "zxy_debug/example/0524/smplx_resample.obj"
-#     v_face_sample, _, _ = load_obj(pred_face_path)
-
-#     # SMPLX-d2-detailed
-#     optimize_obj_path = "zxy_debug/example/0524/0524_comp_scan.obj"
-#     v_opt, _, f_opt = load_obj(optimize_obj_path)
-
-#     # align
-#     # _, _, rot_face = load_obj("data/face/norm_v_d2_clip_format.obj")
-#     _, _, rot_face = load_obj(cfg_resources.models.face_clip_norm)
-#     verts = face_rotate_align(v_face_sample, rot_face - 1, v_d2, faces_d2_new - 1, face_vertex_index)
-#     v_opt[face_vertex_index] = verts[face_vertex_index]
-#     save_obj(v_opt, faces, 'zxy_debug/example_out/cat_face.obj', vts=vts)
-
-#     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-#     example_path = "zxy_debug/example_out"
-
-#     outout_dir = example_path
-
-#     # face_mask = cv2.imread('data/face_uv_refine.png')
-#     face_mask = cv2.imread(cfg_resources.masks.face_uv_refine, cv2.IMREAD_GRAYSCALE) / 255
-
-#     face_mask_d10, verts = face_bound_smooth(v_opt, faces[:,:,0] - 1, face_mask, device)
-
-#     cv2.imwrite(os.path.join(outout_dir, "face_mask_d10.png"), face_mask_d10*255.)
-
-#     mesh = o3d.io.read_triangle_mesh(os.path.join(example_path, "cat_face.obj"))
-#     res_mesh = o3d.geometry.TriangleMesh()
-#     res_mesh.vertices = o3d.utility.Vector3dVector(verts)
-#     res_mesh.triangles = mesh.triangles
-#     o3d.io.write_triangle_mesh(os.path.join(outout_dir, "smooth.obj"), res_mesh)
-
-
+    return vertices
 
 
 

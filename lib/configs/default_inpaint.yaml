@@ -14,7 +14,7 @@ test:
   data_root: "./examples"
   load_size: 1024
   subjects: ["demo_image_w_gt_smplx"] #empty means all subjects under data_root
-  use_smplx_face: False
+  use_smplx: 'head'
 
 train:
   batch_size: 2

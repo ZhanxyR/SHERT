@@ -10,6 +10,7 @@ from lib.tools.subdivide_smplx import subdivide
 from lib.tools.semantic_normal_sampling import Semantic_Normal_Sampling
 from lib.tools.gen_smplx import gen_star_smplx
 from lib.tools.texture_projection import texture_projection
+from lib.tools.face_substitution import face_smooth
 from lib.datasets.InpaintEvalDataset import InapintEvalDataset
 from lib.datasets.RefineEvalDataset import RefineEvalDataset
 from lib.models.InpaintUNet import InpaintUNet
@@ -111,9 +112,10 @@ if __name__ == '__main__':
                     SNS
         ##############################
         '''
-        # Subdivision
+        '''
+        Subdivision
+        '''
         if not (check_key(cfg, ['settings', 'subdivide']) and not cfg.settings.subdivide):
-
             # used inputs
             check_files(files, ['smplx'])
             logging.info(f'Start \'Subdivision\'.')
@@ -130,9 +132,10 @@ if __name__ == '__main__':
         uv_sampler = Index_UV_Generator(data_dir=cfg_resources.others.smplx_official_template_root).to(device)
         sns_sampler = Semantic_Normal_Sampling(cfg_resources, uv_sampler, device, cfg_parameters=cfg)
 
-        # Sampling
+        '''
+        Sampling
+        '''
         if not (check_key(cfg, ['settings', 'sns']) and not cfg.settings.sns):
-
             # used inputs
             check_files(files, ['mesh', 'subsmplx', 'smplx_param'])
             logging.info(f'Start \'Semantic- and Normal-based Sampling\'.')
@@ -155,17 +158,22 @@ if __name__ == '__main__':
 
         # TODO: complete without smplx params
 
-        # smplx_star
+        '''
+        Gen smplx_star
+        '''
         if not check_key(cfg, ['files', 'smplx_star']):
             logging.info(f'Gen \'Star-SMPLX\'.')
             smplx_star_path = gen_star_smplx(files['smplx_param'], save_root, cfg_resources) 
             files['smplx_star'] = smplx_star_path
         else:
+            # Define in the config.yaml to skip
             logging.info(f'Use given \'Star-SMPLX\'.')
 
 
-        if not (check_key(cfg, ['settings', 'complete']) and not cfg.settings.complete):
-            
+        '''
+        Completion
+        '''
+        if not (check_key(cfg, ['settings', 'complete']) and not cfg.settings.complete): 
             # used inputs
             check_files(files, ['sampled_mesh', 'subsmplx', 'error_uv', 'smplx_param', 'smplx_star'])
             logging.info(f'Start \'Completion\'.')
@@ -195,14 +203,42 @@ if __name__ == '__main__':
         else:
             logging.info(f'Skip \'Completion\'.')
 
+
+        '''
+        Face substitution with EMOCA
+        '''
+        if not (check_key(cfg, ['settings', 'face_emoca']) and not cfg.settings.face_emoca):
+            if not check_key(cfg, ['files', 'emoca_face']):
+                # Predict detailed face with EMOCA
+                # TODO:
+                logging.warning('Ignore! Please provide EMOCA result manually.')
+            else:
+                pass
+        
+
+        '''
+        Face smooth
+        '''
+        if not (check_key(cfg, ['settings', 'face_smooth']) and not cfg.settings.face_smooth):
+            # used inputs
+            check_files(files, ['completed_mesh'])
+            logging.info(f'Smooth face boundary.')
+
+            smoothed_path = face_smooth(files['completed_mesh'], cfg_resources, uv_sampler, device, save_root=save_root)
+
+            files['completed_mesh'] = smoothed_path
+
+
         '''
         ##############################
                 Refinement
         ##############################
         '''
 
+        '''
+        Refinement
+        '''
         if not (check_key(cfg, ['settings', 'refine']) and not cfg.settings.refine):
-
             # used inputs  (camera is not needed for ECON)
             check_files(files, ['completed_mesh', 'subsmplx', 'front_normal', 'back_normal', 'image', 'mask'])
             logging.info(f'Start \'Refinement\'.')
@@ -228,14 +264,15 @@ if __name__ == '__main__':
         else:
             logging.info(f'Skip \'Refinement\'.')            
 
-        # Face substitution with EMOCA
-        # TODO:
+        '''
+        ##############################
+                 Modification
+        ##############################
+        '''
 
-        # Face smooth
-        # TODO:
-
-        
-        # Color projection (By default, we use the completed mesh)
+        '''
+        Color projection (By default, we use the completed mesh)
+        '''
         if not (check_key(cfg, ['settings', 'color_projection']) and not cfg.settings.color_projection):
             # used inputs  (camera is not needed for ECON)
             check_files(files, ['completed_mesh', 'image', 'mask'])

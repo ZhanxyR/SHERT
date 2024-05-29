@@ -21,10 +21,15 @@ class InapintEvalDataset(Dataset):
         self.inputs = inputs
         self.transform = transforms.Compose([transforms.ToTensor(), transforms.Resize(self.cfg.load_size)])
 
-        if cfg.use_smplx_face:
+        if cfg.use_smplx == 'head':
             self.uv_mask = cv2.imread(self.resources.masks.mask_wo_head_eyes_hands_feet, cv2.IMREAD_GRAYSCALE)/255
+        elif cfg.use_smplx == 'face':
+            self.uv_mask = cv2.imread(self.resources.masks.mask_wo_eyes_hands_feet, cv2.IMREAD_GRAYSCALE)/255
+            face_mask = cv2.imread(self.resources.masks.face_uv_refine, cv2.IMREAD_GRAYSCALE)/255
+            self.uv_mask[face_mask==1] = 0
         else:
             self.uv_mask = cv2.imread(self.resources.masks.mask_wo_eyes_hands_feet, cv2.IMREAD_GRAYSCALE)/255
+
         self.uv_mask = self.uv_mask.reshape(self.cfg.load_size, self.cfg.load_size, 1)
 
         _, self.subsmplx_vts, self.subsmplx_faces = load_obj(cfg_resources.models.smplx_div2_template)
