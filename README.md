@@ -78,7 +78,7 @@ The version we used is `v0.7.6`, while the lower versions should also be applica
 
 > [!NOTE]
 > If you have any troubles in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.
-<br>(e.g. `./examples/scan/config.yaml`)
+<br>(e.g. `./examples/demo_scan/config.yaml`)
 
 ### 6. Download Required Data and Checkpoints
 
