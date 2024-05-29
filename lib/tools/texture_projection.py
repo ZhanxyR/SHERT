@@ -117,10 +117,11 @@ def projection(vertices, faces, img, img_mask, tex_mask, calib, sampler, device,
                     [1, 1, 1],
                     [0, 1, 0]]).astype(np.uint8)
     partial_tex_mask = cv2.dilate(partial_tex_mask.astype(np.uint8), kernel, iterations=dilate_iter)
+    partial_tex_mask = cv2.cvtColor(partial_tex_mask, cv2.COLOR_RGB2GRAY)
+    partial_tex_mask = cv2.cvtColor(partial_tex_mask, cv2.COLOR_GRAY2RGB)
 
-    partial_tex_black = partial_tex.copy()
-    partial_tex_black[partial_tex_mask==1]=0
-    partial_tex = cv2.cvtColor(partial_tex_black, cv2.COLOR_RGB2BGR)
+    partial_tex[partial_tex_mask==1]=0
+    partial_tex = cv2.cvtColor(partial_tex, cv2.COLOR_RGB2BGR)
 
     return partial_tex, partial_tex_mask, sample_fea
 
