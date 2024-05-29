@@ -109,7 +109,7 @@ python -m apps.quick_demo
 # Use THuman scan and fitted smplx.
 python -m apps.quick_demo -e scan
 
-# Given only image and predict all inputs with ECON.
+# Given only the image and predict all inputs with ECON.
 python -m apps.quick_demo -e image
 ```
 

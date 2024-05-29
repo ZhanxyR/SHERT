@@ -45,7 +45,7 @@ def load_config(args):
         # Use THuman scan and fitted smplx.
         cfg_path = './examples/demo_scan/config.yaml'
     elif args.example == 'image':
-        # Given only image and predict all inputs with ECON.
+        # Given only the image and predict all inputs with ECON.
         cfg_path = './examples/demo_image/config.yaml'
     else:
         # TODO: more, batch
