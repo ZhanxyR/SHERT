@@ -148,7 +148,7 @@ python -m apps.texture_client -i localhost
 ```
 
 
-## 🙏 Acknowledgments
+## 🏵️ Acknowledgments
 
 This work was supported by the National Natural Science Foundation of China (No. 62032011) and the Natural Science Foundation of Jiangsu Province (No. BK20211147).
 
