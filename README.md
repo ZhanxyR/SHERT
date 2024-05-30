@@ -58,7 +58,7 @@ We recommend to use `Pytorch >= 2.0`. While lower versions (lowest tested on `1.
 ### 3. Install Open3d
 
 > [!IMPORTANT]
-> We recommend you to install a specific version of open3d manually to avoid any problem.
+> Please install a specific version of open3d manually to avoid any problem.
 
 (We will fix the bugs to adapt to higher versions later.)
 ```bash
@@ -77,7 +77,7 @@ Follow [Pytorch3D](https://github.com/facebookresearch/pytorch3d/blob/main/INSTA
 The version we used is `v0.7.6`, while the lower versions should also be applicable.
 
 > [!NOTE]
-> If you have any troubles in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.
+> If you have any trouble in building the package, you could just set the `refine_iter` to `1` in corresponding `config.yaml` to avoid using Pytorch3D.
 <br>(e.g. `./examples/demo_scan/config.yaml`)
 
 ### 6. Download Required Data and Checkpoints
