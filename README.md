@@ -40,7 +40,7 @@
 - [4 - Citation](#citation)
 - [5 - Contact](#contact)
 
-## Installation
+## 📍 Installation
 
 ### 1. Get Started
 Start from creating a conda environment.
@@ -111,7 +111,7 @@ The completed structure should be like:
 ```
 
 
-## Demo
+## 🚀 Demo
 
 The whole processes include two steps: `reconstruction` and `texture inpainting`.
 
@@ -128,8 +128,25 @@ python -m apps.quick_demo -e scan
 python -m apps.quick_demo -e image
 ```
 
+🖥️ For `texture inpainting`, we provide a client script and a server script that enables you to run diffusion model on remote server. The client script will create a webui using [gradio](https://www.gradio.app/), which can be accessed by `http://localhost:7860`. 
 
-## Acknowledgments
+> [!NOTE]
+> If you run the client in a new environment, the corresponding dependencies should be reinstalled.
+<br> When you first use inpainting, it will download the pretrained diffusion checkpoints from [Huggingface](https://huggingface.co/).
+
+```bash
+# Run server
+python -m apps.texture_rpc_server
+
+# Run remote client
+python -m apps.texture_client -i <server.ip>
+
+# Run local client
+python -m apps.texture_client -i localhost
+```
+
+
+## 🙏 Acknowledgments
 
 This work was supported by the National Natural Science Foundation of China (No. 62032011) and the Natural Science Foundation of Jiangsu Province (No. BK20211147).
 
@@ -149,7 +166,7 @@ There are also many powerful resources that greatly benefit our work:
 - [Densebody](https://github.com/Lotayou/densebody_pytorch)
 
 
-## Citation
+## 🖋️ Citation
 
 ```bibtex
 @inproceedings{zhan2024shert,
@@ -161,5 +178,5 @@ There are also many powerful resources that greatly benefit our work:
 ```
 
 
-## Contact
+## 📧 Contact
 Zhan, Xiaoyu (zhanxy@smail.nju.edu.cn) and Yang, Jianxin (jianxin-yang@smail.nju.edu.cn)
