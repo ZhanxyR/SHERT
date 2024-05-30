@@ -113,7 +113,7 @@ The completed structure should be like:
 
 ## 🚀 Demo
 
-The whole processes include two steps: `reconstruction` and `texture inpainting`.
+- The whole processes include two steps: `reconstruction` and `texture inpainting`.
 
 ⚡ Run `quick_demo` to test `reconstruction` in given resources. The results will be saved to `./examples/$subject$/results`.
 
@@ -128,10 +128,12 @@ python -m apps.quick_demo -e scan
 python -m apps.quick_demo -e image
 ```
 
-🖥️ For `texture inpainting`, we provide a client script and a server script that enables you to run diffusion model on remote server. The client script will create a webui using [gradio](https://www.gradio.app/), which can be accessed by `http://localhost:7860`. 
+🖥️ For `texture inpainting`, we provide a client script and a server script that enables you to run diffusion model on remote server. 
+
+The client script will create a webui using [gradio](https://www.gradio.app/), which can be accessed by `http://localhost:7860`. 
 
 > [!NOTE]
-> If you run the client in a new environment, the corresponding dependencies should be reinstalled.
+> If you run the client in a new environment, some corresponding dependencies should be reinstalled.
 <br> When you first use inpainting, it will download the pretrained diffusion checkpoints from [Huggingface](https://huggingface.co/).
 
 ```bash
