@@ -82,7 +82,7 @@ The version we used is `v0.7.6`, while the lower versions should also be applica
 
 ### 6. Download Required Data and Checkpoints
 
-Selective to dowload `data/smplx`, `data/face`, and `save/ckpt` from [NJU-Box](https://box.nju.edu.cn/d/a7feb0bf42014f97ae50/) or [Google-Drive](https://drive.google.com/drive/folders/1UokzpgQNGe3q-vdvrWQpD3FreFNy7MmS?usp=sharing).
+Selective to dowload `data/smplx`, `data/face`, `examples/*`, and `save/ckpt` from [NJU-Box](https://box.nju.edu.cn/d/a7feb0bf42014f97ae50/) or [Google-Drive](https://drive.google.com/drive/folders/1UokzpgQNGe3q-vdvrWQpD3FreFNy7MmS?usp=sharing).
 
 Dowload `SMPL-X v1.1 Models` (Male, Female, Neutral) from [SMPL-X](https://smpl-x.is.tue.mpg.de) and put them to `data/models`.
 
@@ -98,6 +98,10 @@ The completed structure should be like:
         |-- models
             |-- smplx
                 |-- SMPLX_*.npz
+    |-- examples
+        |-- demo_image_w_gt
+        |-- demo_image
+        |-- demo_scan
     |-- save
         |-- ckpt
             |-- inpaint.pth     # For mesh completion
