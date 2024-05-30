@@ -80,9 +80,6 @@ def face_clip_smooth(verts, faces, index, smooth=True, factor=10):
 
 def face_rotate_align(verts, faces, smplx_verts, smplx_faces, face_vertex_index, interim_out=False):
 
-    faces = faces - 1
-    smplx_faces = smplx_faces - 1
-
     # _, _, rot_face = load_obj("data/face/norm_v_d2_clip_format.obj")
     rot_y, rot_x = get_rotate_matrix(verts[face_vertex_index], faces)
     rot_v_face_sample = np.matmul(rot_y, verts.transpose()).transpose()
@@ -208,6 +205,10 @@ def face_substitution(files, cfg_resources, sampler, device, save_root=None):
     # align
     v_ori, _, f_ori = load_obj(files['completed_mesh'])
     _, _, rot_face = load_obj(cfg_resources.models.face_clip_norm)
+
+    rot_face = rot_face[..., 0] - 1
+    faces_d2 = faces_d2 - 1
+    
     verts = face_rotate_align(v_face_sample, rot_face, v_d2, faces_d2, face_vertex_index)
     v_ori[face_vertex_index] = verts[face_vertex_index]
 
@@ -218,10 +219,6 @@ def face_substitution(files, cfg_resources, sampler, device, save_root=None):
         return save_path
     
     return v_ori
-
-
-
-
 
 
     

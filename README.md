@@ -99,7 +99,7 @@ The completed structure should be like:
             |-- smplx
                 |-- SMPLX_*.npz
     |-- examples
-        |-- demo_image_w_gt
+        |-- demo_image_w_gt_smplx
         |-- demo_image
         |-- demo_scan
     |-- save
