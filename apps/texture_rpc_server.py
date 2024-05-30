@@ -28,18 +28,19 @@ from diffusers import (
 )
 
 
+
+
 class ModelZoo():
 
     def __init__(self, args, device):
 
-
         self.current_model = 'empty'
-        self.target_model = 'empty'
+        self.target_model = 'local'
 
         self.device = device
         self.weight_dtype = torch.float32
 
-        self.size = 1024
+        self.size = args.size
         self.tokenizer = None
         self.text_encoder_cls = None
         self.noise_scheduler = None
@@ -53,7 +54,9 @@ class ModelZoo():
         self.modelzoos = []
 
         self.uv_texture_mask = np.asarray(Image.open("./data/masks/uv_texture_mask_dilate.png").convert("RGB").resize((self.size, self.size))).astype(float) /255.
+        self.seam_mask = np.asarray(Image.open("./data/masks/uv_texture_mask_erode.png").convert("RGB").resize((self.size, self.size))).astype(float) /255.
 
+        self.modify = False
 
     def load_diffusion_model(self, pretrained_model, pretrained_control):
         self.tokenizer = AutoTokenizer.from_pretrained(
@@ -150,7 +153,7 @@ class ModelZoo():
                     controlnet_conditioning_scale=control_scale, guidance_scale=scale, negative_prompt=n_prompt
                 ).images[0]
 
-            images.append(np.array(image))
+            images.append(self.modify_seams(np.array(image)))
 
         images = np.asarray(images)
         images = images.tobytes()
@@ -244,7 +247,7 @@ class ModelZoo():
                     guidance_scale=scale, negative_prompt=n_prompt
                 ).images[0]
 
-            images.append(np.array(image))
+            images.append(self.modify_seams(np.array(image)))
 
         images = np.asarray(images)
         images = images.tobytes()
@@ -283,14 +286,28 @@ class ModelZoo():
         torch.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
 
+    def modify_seams(self, image):
+
+        if not self.modify:
+            return image
+
+        image_ex = cv2.resize(image, (1028, 1028))
+        image_ex = image_ex[2:-2, 2:-2, :]
+
+        image_ex[self.seam_mask>0] = 0
+        image[self.seam_mask==0]=0
+        image = image + image_ex
+
+        return image
+
 
 class InpaintServer(object):
 
     def __init__(self, model_zoo):
 
         self.model_zoo = model_zoo
-        
 
+    
     def global_inpaint(self, image_bytes, num_samples, prompt, n_prompt, ddim_steps, scale, control_scale, seed, size):
 
         logging.info(f'New tasks for global inpainting: {num_samples}')
@@ -363,6 +380,7 @@ def parse():
     parser.add_argument('-g', '--gpu', type=int, default=0, help='The GPU device to be used.')
     parser.add_argument('-i', '--host', type=str, default='0.0.0.0')
     parser.add_argument('-p', '--port', type=int, default=4242)
+    parser.add_argument('-s', '--size', type=int, default=1024, help='Image size')
     parser.add_argument('--global_pretrained_path', type=str, default="stabilityai/stable-diffusion-2-1")
     parser.add_argument('--global_controlnet_path', type=str, default="./save/ckpt/texture_global")
     parser.add_argument('--local_pretrained_path', type=str, default="runwayml/stable-diffusion-inpainting")
@@ -377,8 +395,6 @@ if __name__ == "__main__":
 
     args = parse()
 
-    logging.info(f'Server start: {args.host}:{args.port}')
-
     device = torch.device(f'cuda:{args.gpu}' if torch.cuda.is_available() else 'cpu')
 
     model_zoo = ModelZoo(args, device)
@@ -387,4 +403,7 @@ if __name__ == "__main__":
 
     s.bind(f"tcp://{args.host}:{args.port}")
 
+    logging.info(f'Server start: {args.host}:{args.port}')
+
     s.run()
+    

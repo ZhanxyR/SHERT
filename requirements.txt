@@ -10,3 +10,5 @@ trimesh
 pyembree
 smplx
 yacs
+gradio==4.20.1
+gradio_toggle==0.0.2

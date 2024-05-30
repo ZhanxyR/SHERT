@@ -10,19 +10,20 @@ import os
 from tqdm import tqdm
 import socket
 import argparse
+import cv2
 
 
 def process(input_image, toggle, input_mask, prompt, n_prompt, num_samples, ddim_steps, scale, control_scale, seed):
 
     if input_image is not None:
-        input_image = input_image.reshape(args.size,args.size,3)
+        input_image = cv2.resize(input_image, (args.size, args.size))
         image_bytes = input_image.tobytes()
     else:
         raise gr.Error('Need the input image for inpainting!')
         return
 
     if input_mask is not None:
-        input_mask = input_mask.reshape(args.size,args.size,3)
+        input_mask = cv2.resize(input_mask, (args.size, args.size))
         mask_bytes = input_mask.tobytes()
     else:
         if toggle:
@@ -158,9 +159,9 @@ def parse():
     
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-i', '--host', type=str, default='0.0.0.0', required=True, help='Server IP')
+    parser.add_argument('-i', '--host', type=str, default='localhost', help='Server IP')
     parser.add_argument('-p', '--port', type=int, default=4242)
-    parser.add_argument('-s', '--size', type=int, default=1024)
+    parser.add_argument('-s', '--size', type=int, default=1024, help='Image size')
     parser.add_argument('-m', '--mesh', type=str, default='data/smplx/vt_example.obj', help='Provide the vt information')
 
     return parser.parse_args()

@@ -23,7 +23,7 @@
         <img src="https://img.shields.io/badge/arXiv-2403.02561-B31B1B" alt='Arxiv Link'></a>
   </p>
   <br>
-  <p>This repository contains the official <b>PyTorch</b> implementation for <b>Semantic Human Mesh Reconstruction with Textures</b>.</p>
+  <p>This repository contains the official <b>Pytorch</b> implementation for <b>Semantic Human Mesh Reconstruction with Textures</b>.</p>
   <div align="center">
     <img src="./assets/teaser_v11.jpg" alt="teaser" width="100%">
   </div>
