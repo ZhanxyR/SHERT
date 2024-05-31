@@ -30,8 +30,6 @@
   
 </p>
 
-  ## (Preparing, coming soon)
-  ### Thank you for your interest in this repository. We are currently in the process of converting model formats and finalizing scripts. The code will be released at a later time.
 
 ## Overview
 - [1 - Installation](#installation)
