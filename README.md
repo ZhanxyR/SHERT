@@ -128,7 +128,7 @@ python -m apps.quick_demo -e image
 
 🖥️ For `texture inpainting`, we provide a client script and a server script that enables you to run diffusion model on remote server. 
 
-The client script will create a webui using [gradio](https://www.gradio.app/), which can be accessed by `http://localhost:7860`. 
+The client script will create a webui using [Gradio](https://www.gradio.app/), which can be accessed by `http://localhost:7860`. 
 
 > [!NOTE]
 > If you run the client in a new environment, some corresponding dependencies should be reinstalled.

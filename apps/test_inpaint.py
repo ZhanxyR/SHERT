@@ -37,7 +37,7 @@ def evaluate_inpaint(sampler, model, dataset, cfg, cfg_resources, device, save_r
         star_vertices = batch['star_vertices'].to(device)
         error_uv_mask = batch['error_uv_mask'].to(device)
     
-        smplx_star_uv = sampler.get_UV_map(smplx_star_vertices) * uv_mask
+        smplx_star_uv = sampler.get_UV_map(smplx_star_vertices)
         smplx_star_normal_uv = sampler.get_UV_map(smplx_star_normals) * uv_mask
         displacement_uv = sampler.get_UV_map(displacement) * uv_mask
         star_uv = sampler.get_UV_map(star_vertices) * uv_mask
