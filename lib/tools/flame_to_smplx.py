@@ -61,35 +61,5 @@ def flame_to_smplx(verts, cfg_resources, smplx_sampler, device, flame_texture=No
 
     return smplx_vert_resample, smplx_tex_uv
 
-# '''
-# Input:  
-#     |---FLAME-detailed:      
-#         |---Vertices        [59315, 3]
-#         |---Faces           [117380, 3]
-#     |---Texture(FLAME)      [256, 256, 3] 
-
-# Output:
-#     |---SMPLX-d2:            
-#         |---Vertices        [149921, 3]
-#         |---Faces           [299712, 3]
-#     |---Texture(SMPLX)      [1024, 1024, 3]
-# '''
-# if __name__=='__main__':
-
-#     cfg_resources = get_cfg_defaults("lib/configs/resources.yaml")
-    
-#     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-#     v, _, _ = load_obj('zxy_debug/input/mesh_coarse_detail.obj')
-#     flame_texture = cv2.imread('zxy_debug/input/deca.png')
-
-#     # v, uv = flame_to_smplx(v, device)
-#     v, uv = flame_to_smplx(v, cfg_resources, device, flame_texture=flame_texture)
-
-#     v = v[0].detach().cpu().numpy()
-#     _, vts, f = load_obj('data/smplx/smplx_div2_template.obj')
-#     save_obj(v, f, "zxy_debug/output/smplx_resample.obj", vts=vts)
-
-#     cv2.imwrite('zxy_debug/output/smplx_uv.png', uv)
 
 

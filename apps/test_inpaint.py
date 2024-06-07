@@ -93,31 +93,4 @@ def evaluate_inpaint(sampler, model, dataset, cfg, cfg_resources, device, save_r
         
         return pred_star_vertices_np, pred_org_verts_np
 
-# if __name__ == '__main__':
-#     # get inpaint configuration
-#     cfg_resources = get_cfg_defaults("lib/configs/resources.yaml")
-#     cfg_inpaint = get_cfg_defaults("lib/configs/default_inpaint.yaml")
-
-#     # torch init
-#     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-#     torch.cuda.empty_cache()
-#     # torch.cuda.set_device(device)
-
-#     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-
-#     # load model
-#     model = InpaintUNet(uv_channels=cfg_inpaint.model.input_channels, bilinear=cfg_inpaint.model.bilinear)
-#     model.requires_grad_(False)
-#     model.eval()
-#     model.cuda()
-#     state_dict = torch.load(cfg_inpaint.test.ckpt_path, map_location=device)
-#     model.load_state_dict(state_dict['model'])
-#     logging.info(f'load inpaint model from {cfg_inpaint.test.ckpt_path} on {device}')
-#     sampler = Index_UV_Generator(UV_height=1024, UV_width=-1, uv_type='SMPLX').to(device)
-
-
-#     dataset = InapintEvalDataset(cfg_inpaint.test, cfg_resources)
-#     evaluate_inpaint(sampler, model, dataset, cfg_inpaint, cfg_resources, device)
-
-
 

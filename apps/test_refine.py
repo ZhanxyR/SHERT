@@ -97,29 +97,5 @@ def evaluate_refine(sampler, model, dataset, cfg, cfg_resources, device, save_ro
 
 
 
-# if __name__ == '__main__':
-
-#     cfg_resources = get_cfg_defaults("lib/configs/resources.yaml")
-#     cfg_refine = get_cfg_defaults("lib/configs/refine.yaml")
-
-#     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-#     torch.cuda.empty_cache()
-#     torch.cuda.set_device(device)
-
-#     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-
-#     model = RefineUNet(cfg_refine.model.input_channels, 3, 6, 1, bilinear=cfg_refine.model.bilinear)
-
-#     model.requires_grad_(False)
-#     model.eval()
-#     model.cuda()
-#     state_dict = torch.load(cfg_refine.test.ckpt_path, map_location=device)
-#     model.load_state_dict(state_dict['model'])
-#     logging.info(f'load refine model from {cfg_refine.test.ckpt_path} on {device}')
-
-#     evaluate_refine(cfg_refine, cfg_resources, model, device)
-
-
-
 
 

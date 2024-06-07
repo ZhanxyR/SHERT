@@ -103,6 +103,3 @@ def gen_star_smplx(smplx_param_path, save_root, cfg_resources):
 
 
     return output_path
-
-if __name__=="__main__":
-    gen_star_smplx("examples/demo_image_w_gt_smplx/smplx_param.pkl", "examples/demo_image_w_gt_smplx/smplx_star.obj")

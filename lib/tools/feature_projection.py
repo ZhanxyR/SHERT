@@ -38,32 +38,7 @@ def index(feat, uv):
     samples = torch.nn.functional.grid_sample(feat, uv, align_corners=True)  # [B, C, N, 1]
     return samples[:, :, :, 0]  # [B, C, N]
 
-if __name__=="__main__":
-    mesh = o3d.io.read_triangle_mesh("../60_0_00_full.obj")
-    vertices = np.asarray(mesh.vertices)
-    vertices = torch.from_numpy(vertices).float().unsqueeze(dim=0).permute(0,2,1)
 
-
-    calib = np.load("./data/econ_calib.npy")
-    calib = torch.from_numpy(calib).float().unsqueeze(dim=0)
-    crop_query_points = orthogonal(vertices, calib, None)
-    print("vertices shape {}".format(vertices.shape))
-    print("crop_query_points shape {}".format(crop_query_points.shape))
-    xy = crop_query_points[:, :2, :]
-    z = crop_query_points[:, 2:3, :]
-
-    print("xy shape {}".format(xy.shape))
-    # in_img = (xy[:, 0] >= -1.0) & (xy[:, 0] <= 1.0) & (xy[:, 1] >= -1.0) & (xy[:, 1] <= 1.0)
-    # print("in_img shape {}".format(in_img.shape))
-    img = cv2.imread("60_0_00.jpg")
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) /255.
-    img = torch.from_numpy(img).float().permute(2,0,1).unsqueeze(dim=0)
-    sample_fea = index(img, xy).permute(0,2,1)[0].numpy()
-    print("sampler fea shape {}".format(sample_fea.shape))
-    mesh.vertex_colors = o3d.utility.Vector3dVector(sample_fea)
-
-
-    o3d.visualization.draw_geometries([mesh],window_name="mesh")
 
 
 
