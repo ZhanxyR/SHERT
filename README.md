@@ -170,7 +170,7 @@ There are also many powerful resources that greatly benefit our work:
 
 ```bibtex
 @inproceedings{zhan2024shert,
-    title     = {Semantic Human Mesh Reconsturction with Textures},
+    title     = {Semantic Human Mesh Reconstruction with Textures},
     author    = {Zhan, Xiaoyu and Yang, Jianxin and Li, Yuanqi and Guo, Jie and Guo, Yanwen and Wang, Wenping},
     booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
     year      = {2024},
